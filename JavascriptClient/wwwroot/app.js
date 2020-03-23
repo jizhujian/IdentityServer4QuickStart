@@ -17,12 +17,12 @@ document.getElementById("api").addEventListener("click", api, false);
 document.getElementById("logout").addEventListener("click", logout, false);
 
 var config = {
-  authority: "http://jzj519576512.xicp.net:5000",
+  authority: "https://jzj519576512.xicp.net:5000",
   client_id: "IdentityServer4QuickStart_JavascriptApp",
-  redirect_uri: "http://localhost:50003/callback.html",
+  redirect_uri: "https://localhost:50003/callback.html",
   response_type: "code",
   scope: "openid profile IdentityServer4QuickStart_api",
-  post_logout_redirect_uri: "http://localhost:50003/index.html",
+  post_logout_redirect_uri: "https://localhost:50003/index.html",
 };
 var mgr = new Oidc.UserManager(config);
 
@@ -41,7 +41,7 @@ function login() {
 
 function api() {
   mgr.getUser().then(function (user) {
-    var url = "http://localhost:50001/api/identity/getuserclaims";
+    var url = "https://localhost:50001/api/identity/getuserclaims";
 
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url);

@@ -16,7 +16,7 @@ namespace Api
       services.AddAuthentication("Bearer")
           .AddJwtBearer("Bearer", options =>
           {
-            options.Authority = "http://jzj519576512.xicp.net:5000";
+            options.Authority = "https://jzj519576512.xicp.net:5000";
             options.RequireHttpsMetadata = false;
             options.Audience = "IdentityServer4QuickStart_api";
           });

@@ -14,7 +14,7 @@ namespace Client
       var client = new HttpClient();
       var disco = await client.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
       {
-        Address = "http://jzj519576512.xicp.net:5000",
+        Address = "https://jzj519576512.xicp.net:5000",
         Policy =
         {
             RequireHttps = false
@@ -23,7 +23,8 @@ namespace Client
       if (disco.IsError)
       {
         Console.WriteLine(disco.Error);
-        return;
+          Console.ReadLine();
+          return;
       }
 
       // request token
@@ -38,7 +39,8 @@ namespace Client
       if (tokenResponse.IsError)
       {
         Console.WriteLine(tokenResponse.Error);
-        return;
+          Console.ReadLine();
+          return;
       }
 
       Console.WriteLine(tokenResponse.Json);
@@ -46,7 +48,7 @@ namespace Client
       // call api
       client.SetBearerToken(tokenResponse.AccessToken);
 
-      var response = await client.GetAsync("http://localhost:50001/api/identity/getuserclaims");
+      var response = await client.GetAsync("https://localhost:50001/api/identity/getuserclaims");
       if (!response.IsSuccessStatusCode)
       {
         Console.WriteLine(response.StatusCode);
@@ -56,6 +58,8 @@ namespace Client
         var content = await response.Content.ReadAsStringAsync();
         Console.WriteLine(JArray.Parse(content));
       }
+
+      Console.ReadLine();
     }
   }
 }

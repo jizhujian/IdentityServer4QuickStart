@@ -34,7 +34,7 @@ namespace MvcClient
           .AddCookie("Cookies")
           .AddOpenIdConnect("oidc", options =>
           {
-            options.Authority = "http://jzj519576512.xicp.net:5000";
+            options.Authority = "https://jzj519576512.xicp.net:5000";
             options.RequireHttpsMetadata = false;
 
             options.ClientId = "IdentityServer4QuickStart_MvcApp";
