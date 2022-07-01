@@ -68,7 +68,6 @@ namespace MvcCode
                 {
                     // client config is inferred from OpenID Connect settings
                     // if you want to specify scopes explicitly, do it here, otherwise the scope parameter will not be sent
-                    options.Client.Scope = "IdentityServer4QuickStart_api";
                     options.Client.Clients.Add("identityserver", new ClientCredentialsTokenRequest
                     {
                         Address = "https://jzj519576512.xicp.net:5000/connect/token",

@@ -25,7 +25,7 @@ namespace MvcClient
         {
 
             services.AddControllersWithViews();
-            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+            //JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
             var authenticationOptions = Configuration.GetSection("Authentication").Get<AuthenticationOptions>();
 

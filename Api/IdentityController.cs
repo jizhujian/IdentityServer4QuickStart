@@ -1,17 +1,22 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Api
 {
+    /// <summary>
+    /// 标识
+    /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize]
     public class IdentityController : ControllerBase
     {
+        /// <summary>
+        /// 用户声明
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult GetUserClaims()
         {
-            return Ok((from c in User.Claims select new { c.Type, c.Value }).ToList());
+            return Ok(User.Claims.Select(it => new { it.Type, it.Value }).ToList());
         }
     }
 }

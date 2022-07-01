@@ -34,12 +34,13 @@ namespace ConsoleClient
             }
 
             // request token
-            var tokenResponse = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+            var tokenResponse = await client.RequestPasswordTokenAsync(new PasswordTokenRequest
             {
                 Address = disco.TokenEndpoint,
                 ClientId = authenticationOptions.ClientId,
-                ClientSecret = authenticationOptions.ClientSecret
-                //Scope = authenticationOptions.Scope
+                ClientSecret = authenticationOptions.ClientSecret,
+                UserName = authenticationOptions.UserName,
+                Password = authenticationOptions.Password
             });
 
             if (tokenResponse.IsError)

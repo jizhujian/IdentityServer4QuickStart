@@ -17,12 +17,12 @@ document.getElementById("api").addEventListener("click", api, false);
 document.getElementById("logout").addEventListener("click", logout, false);
 
 var config = {
-  authority: "https://identityserver:44310",
-  client_id: "身份验证和授权服务快速入门_Javascript前端应用",
-  redirect_uri: "http://localhost:39997/callback.html",
+  authority: "https://61.177.200.186:44310",
+  client_id: "身份验证和授权服务快速入门_api_js客户端",
+  redirect_uri: "https://localhost:39997/callback.html",
   response_type: "code",
   scope: "openid profile 身份验证和授权服务快速入门_api",
-  post_logout_redirect_uri: "http://localhost:39997",
+  post_logout_redirect_uri: "https://localhost:39997",
 };
 var mgr = new Oidc.UserManager(config);
 
