@@ -40,7 +40,8 @@ namespace ConsoleClient
                 ClientId = authenticationOptions.ClientId,
                 ClientSecret = authenticationOptions.ClientSecret,
                 UserName = authenticationOptions.UserName,
-                Password = authenticationOptions.Password
+                Password = authenticationOptions.Password,
+                Scope = authenticationOptions.Scopes
             });
 
             if (tokenResponse.IsError)
@@ -50,7 +51,23 @@ namespace ConsoleClient
                 return;
             }
 
-            Console.WriteLine(tokenResponse.Json);
+            Console.WriteLine(tokenResponse.Raw);
+
+            var userInfo = await client.GetUserInfoAsync(new UserInfoRequest
+            {
+                Address = disco.UserInfoEndpoint,
+                Token = tokenResponse.AccessToken
+            });
+            if (userInfo.IsError)
+            {
+                Console.WriteLine(userInfo.Error);
+                Console.ReadLine();
+                return;
+            };
+            foreach (var claim in userInfo.Claims)
+            {
+                Console.WriteLine($"{claim.Type} = {claim.Value}");
+            };
 
             // call api
             client.SetBearerToken(tokenResponse.AccessToken);

@@ -1,21 +1,33 @@
 ﻿@using Microsoft.AspNetCore.Authentication
+@{
+    ViewData["Title"] = "Claims";
+}
+
+<h2>Roles</h2>
+
+<dl>
+    <dt>Name</dt>
+    <dd>@User.Identity?.Name</dd>
+    <dt>身份验证和授权服务管理员组</dt>
+    <dd>@User.IsInRole("身份验证和授权服务管理员组")</dd>
+</dl>
 
 <h2>Claims</h2>
 
 <dl>
-  @foreach (var claim in User.Claims)
-  {
-    <dt>@claim.Type</dt>
-    <dd>@claim.Value</dd>
-  }
+    @foreach (var claim in User.Claims)
+    {
+        <dt>@claim.Type</dt>
+        <dd>@claim.Value</dd>
+    }
 </dl>
 
 <h2>Properties</h2>
 
 <dl>
-  @foreach (var prop in (await Context.AuthenticateAsync()).Properties.Items)
-  {
-    <dt>@prop.Key</dt>
-    <dd>@prop.Value</dd>
-  }
+    @foreach (var prop in (await Context.AuthenticateAsync())!.Properties!.Items)
+    {
+        <dt>@prop.Key</dt>
+        <dd>@prop.Value</dd>
+    }
 </dl>

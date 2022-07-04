@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Call WebApi";
+}
+<h2>Call WebApi</h2>
+
+<dl>
+  @foreach (var claim in @ViewBag.UserClaims)
+  {
+    <dt>@claim.Type</dt>
+    <dd>@claim.Value</dd>
+  }
+</dl>
