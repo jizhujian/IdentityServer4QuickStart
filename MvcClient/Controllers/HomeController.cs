@@ -9,11 +9,11 @@ namespace MvcClient.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IHttpClientFactory httpClientFactory)
         {
-            _logger = logger;
+            _httpClientFactory = httpClientFactory;
         }
 
         public IActionResult Index()
@@ -39,11 +39,8 @@ namespace MvcClient.Controllers
 
         public async Task<IActionResult> CallWebApi()
         {
-            var accessToken = await HttpContext.GetTokenAsync("access_token");
-
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            var content = await client.GetStringAsync("http://localhost:39999/api/identity/getuserclaims");
+            var client = _httpClientFactory.CreateClient("client");
+            var content = await client.GetStringAsync("identity/getuserclaims");
             var data = JsonSerializer.Deserialize<List<ClaimItem>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             ViewBag.UserClaims = data;
             return View("CallWebApi");

@@ -1,51 +1,36 @@
+﻿using IdentityModel.Client;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serilog;
-using System;
-using IdentityModel.Client;
-using Serilog.Sinks.SystemConsole.Themes;
+using WorkerService;
 
-namespace WorkerService
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json")
+    .Build();
+var authenticationOptions = configuration.GetSection("Authentication").Get<AuthenticationOptions>();
+
+var builder = Host.CreateDefaultBuilder(args);
+
+builder.ConfigureServices((hostContext, services) =>
 {
-    public class Program
+    services.AddClientAccessTokenManagement(options =>
     {
-        public static void Main(string[] args)
+        options.Clients.Add("identityserver", new ClientCredentialsTokenRequest
         {
-            Log.Logger = new LoggerConfiguration()
-                                .MinimumLevel.Debug()
-                                .WriteTo.Console(theme: AnsiConsoleTheme.Code)
-                                .CreateLogger();
+            Address = authenticationOptions.Authority + "/connect/token",
+            ClientId = authenticationOptions.ClientId,
+            ClientSecret = authenticationOptions.ClientSecret
+        });
+    });
 
-            CreateHostBuilder(args).Build().Run();
-        }
+    services.AddClientAccessTokenHttpClient("client", configureClient: client =>
+    {
+        client.BaseAddress = new Uri(configuration.GetValue<string>("ApiBaseUrl"));
+    });
 
-        public static IHostBuilder CreateHostBuilder(string[] args)
-        {
-            var host = Host.CreateDefaultBuilder(args)
-                .UseSerilog()
-                .ConfigureServices((hostContext, services) =>
-                {
-                    services.AddAccessTokenManagement(options =>
-                    {
-                        options.Client.Clients.Add("identityserver", new ClientCredentialsTokenRequest
-                        {
-                            Address = "https://jzj519576512.xicp.net:5000/connect/token",
-                            ClientId = "IdentityServer4QuickStart_ConsoleApp",
-                            ClientSecret = "Q!CTp2^6oxzhKunp",
-                            Scope = "IdentityServer4QuickStart_api"
-                        });
-                    });
+    services.AddHostedService<Worker>();
+});
 
-                    services.AddClientAccessTokenClient("client", configureClient: client =>
-                    {
-                        client.BaseAddress = new Uri("http://localhost:50001/api/");
-                    });
+var app = builder.Build();
 
-                    services.AddHostedService<Worker>();
-                });
-
-            return host;
-        }
-            
-    }
-}
+app.Run();
