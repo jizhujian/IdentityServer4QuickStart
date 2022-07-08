@@ -4,8 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,7 +26,5 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1264.42" />
   </ItemGroup>
-
-  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

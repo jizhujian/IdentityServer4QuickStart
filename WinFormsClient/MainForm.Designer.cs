@@ -28,20 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.RefreshToken = new System.Windows.Forms.Button();
+            this.RefreshTokenButton = new System.Windows.Forms.Button();
             this.Output = new System.Windows.Forms.TextBox();
-            this.CallWebApi = new System.Windows.Forms.Button();
+            this.CallWebApiButton = new System.Windows.Forms.Button();
+            this.LoginButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // RefreshToken
+            // RefreshTokenButton
             // 
-            this.RefreshToken.Location = new System.Drawing.Point(25, 20);
-            this.RefreshToken.Name = "RefreshToken";
-            this.RefreshToken.Size = new System.Drawing.Size(168, 41);
-            this.RefreshToken.TabIndex = 0;
-            this.RefreshToken.Text = "Refresh Token";
-            this.RefreshToken.UseVisualStyleBackColor = true;
-            this.RefreshToken.Click += new System.EventHandler(this.RefreshToken_Click);
+            this.RefreshTokenButton.Location = new System.Drawing.Point(199, 10);
+            this.RefreshTokenButton.Name = "RefreshTokenButton";
+            this.RefreshTokenButton.Size = new System.Drawing.Size(168, 41);
+            this.RefreshTokenButton.TabIndex = 1;
+            this.RefreshTokenButton.Text = "刷新Token";
+            this.RefreshTokenButton.UseVisualStyleBackColor = true;
+            this.RefreshTokenButton.Click += new System.EventHandler(this.RefreshTokenButton_Click);
             // 
             // Output
             // 
@@ -52,29 +53,40 @@
             this.Output.Multiline = true;
             this.Output.Name = "Output";
             this.Output.Size = new System.Drawing.Size(751, 350);
-            this.Output.TabIndex = 1;
+            this.Output.TabIndex = 4;
             // 
-            // CallWebApi
+            // CallWebApiButton
             // 
-            this.CallWebApi.Location = new System.Drawing.Point(199, 20);
-            this.CallWebApi.Name = "CallWebApi";
-            this.CallWebApi.Size = new System.Drawing.Size(168, 41);
-            this.CallWebApi.TabIndex = 2;
-            this.CallWebApi.Text = "Call WebApi";
-            this.CallWebApi.UseVisualStyleBackColor = true;
-            this.CallWebApi.Click += new System.EventHandler(this.CallWebApi_Click);
+            this.CallWebApiButton.Location = new System.Drawing.Point(373, 11);
+            this.CallWebApiButton.Name = "CallWebApiButton";
+            this.CallWebApiButton.Size = new System.Drawing.Size(168, 41);
+            this.CallWebApiButton.TabIndex = 2;
+            this.CallWebApiButton.Text = "调用WebApi";
+            this.CallWebApiButton.UseVisualStyleBackColor = true;
+            this.CallWebApiButton.Click += new System.EventHandler(this.CallWebApiButton_Click);
+            // 
+            // LoginButton
+            // 
+            this.LoginButton.Location = new System.Drawing.Point(25, 11);
+            this.LoginButton.Name = "LoginButton";
+            this.LoginButton.Size = new System.Drawing.Size(168, 40);
+            this.LoginButton.TabIndex = 0;
+            this.LoginButton.Text = "登录";
+            this.LoginButton.UseVisualStyleBackColor = true;
+            this.LoginButton.Click += new System.EventHandler(this.LoginButton_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.CallWebApi);
+            this.Controls.Add(this.LoginButton);
+            this.Controls.Add(this.CallWebApiButton);
             this.Controls.Add(this.Output);
-            this.Controls.Add(this.RefreshToken);
+            this.Controls.Add(this.RefreshTokenButton);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -82,8 +94,9 @@
 
         #endregion
 
-        private Button RefreshToken;
+        private Button RefreshTokenButton;
         private TextBox Output;
-        private Button CallWebApi;
+        private Button CallWebApiButton;
+        private Button LoginButton;
     }
 }

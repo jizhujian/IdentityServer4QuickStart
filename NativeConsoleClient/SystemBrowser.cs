@@ -26,7 +26,7 @@ namespace NativeConsoleClient
             }
         }
 
-        private static int GetRandomUnusedPort()
+        public static int GetRandomUnusedPort()
         {
             var listener = new TcpListener(IPAddress.Loopback, 0);
             listener.Start();

@@ -1,17 +1,22 @@
-using IdentityModel.Client;
+锘縰sing IdentityModel.Client;
 using Microsoft.Extensions.Configuration;
+using System.Net.Http;
 using System.Text;
+using System.Windows;
 
-namespace WinFormsClient
+namespace WpfClient
 {
-    public partial class MainForm : Form
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
     {
-        public MainForm()
+        public MainWindow()
         {
             InitializeComponent();
         }
 
-        private async void LoginButton_Click(object sender, EventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             if (await LoginHelper.LoginAsync())
             {
@@ -21,6 +26,8 @@ namespace WinFormsClient
                 sb.AppendLine($"access token = {LoginHelper.AccessToken}");
                 sb.AppendLine($"access token expiration = {LoginHelper.LoginResult?.AccessTokenExpiration}");
                 sb.AppendLine($"refresh token = {LoginHelper.RefreshToken ?? "none"}");
+
+                sb.AppendLine("****** Claims ******");
                 foreach (var claim in LoginHelper.LoginResult!.User.Claims)
                 {
                     sb.AppendLine($"{claim.Type} = {claim.Value}");
@@ -29,12 +36,11 @@ namespace WinFormsClient
             }
             else
             {
-                Output.Text = $"错误信息：{LoginHelper.LoginResult?.Error}";
+                Close();
             };
         }
 
-
-        private async void RefreshTokenButton_Click(object sender, EventArgs e)
+        private async void RefreshTokenButton_Click(object sender, RoutedEventArgs e)
         {
             if (await LoginHelper.RefreshTokenAsync())
             {
@@ -47,11 +53,11 @@ namespace WinFormsClient
             }
             else
             {
-                Output.Text = $"错误信息: {LoginHelper.RefreshTokenResult?.Error}";
+                Output.Text = $"閿欒淇℃伅: {LoginHelper.RefreshTokenResult?.Error}";
             };
         }
 
-        private async void CallWebApiButton_Click(object sender, EventArgs e)
+        private async void CallWebApiButton_Click(object sender, RoutedEventArgs e)
         {
             var configuration = new ConfigurationBuilder()
                .AddJsonFile("appsettings.json")

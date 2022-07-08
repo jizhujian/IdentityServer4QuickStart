@@ -1,24 +1,56 @@
 using IdentityModel.Client;
 using IdentityModel.OidcClient;
 using NativeConsoleClient;
+using System.Net;
+using System.Text;
 
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
     .Build();
 var authenticationOptions = configuration.GetSection("Authentication").Get<AuthenticationOptions>();
+var automaticMode = configuration.GetValue<bool>("AutomaticMode");
 
-var browser = new SystemBrowser();
+var port = SystemBrowser.GetRandomUnusedPort();
+
 var options = new OidcClientOptions
 {
     Authority = authenticationOptions.Authority,
     ClientId = authenticationOptions.ClientId,
     ClientSecret = authenticationOptions.ClientSecret,
-    RedirectUri = $"http://127.0.0.1:{browser.Port}",
+    RedirectUri = $"http://127.0.0.1:{port}",
     Scope = authenticationOptions.Scope,
-    Browser = browser,
+    Browser = automaticMode ? new SystemBrowser(port) : null,
 };
 var oidcClient = new OidcClient(options);
-var loginResult = await oidcClient.LoginAsync();
+
+LoginResult? loginResult;
+if (automaticMode)
+{
+    loginResult = await oidcClient.LoginAsync();
+}
+else
+{
+    var httpListener = new HttpListener();
+    httpListener.Prefixes.Add($"http://127.0.0.1:{port}/");
+    httpListener.Start();
+
+    var state = await oidcClient.PrepareLoginAsync();
+
+    SystemBrowser.OpenBrowser(state.StartUrl);
+
+    var context = await httpListener.GetContextAsync();
+    var data = context?.Request?.Url?.AbsoluteUri;
+
+    context!.Response.StatusCode = 200;
+    context.Response.ContentType = "text/html;charset=utf-8";
+    var responseString = "<h1>登录成功，您现在可以返回到应用程序。</h1><h1>Login success, You can now return to the application.</h1>";
+    var buffer = Encoding.UTF8.GetBytes(responseString);
+    context.Response.ContentLength64 = buffer.Length;
+    await context.Response.OutputStream.WriteAsync(buffer, 0, buffer.Length);
+    context.Response.OutputStream.Close();
+
+    loginResult = await oidcClient.ProcessResponseAsync(data, state);
+};
 
 if (loginResult.IsError)
 {

@@ -4,26 +4,17 @@ namespace WinFormsClient
 {
     internal class WinFormsWebView : IBrowser
     {
-        private readonly Func<Form> _formFactory;
-
-        public WinFormsWebView(Func<Form> formFactory)
-        {
-            _formFactory = formFactory;
-        }
-
-        public WinFormsWebView(string title = "登录", int width = 1024, int height = 768)
-            : this(() => new Form
-            {
-                Name = "WebAuthentication",
-                Text = title,
-                Width = width,
-                Height = height
-            })
-        { }
 
         public async Task<BrowserResult> InvokeAsync(BrowserOptions options, CancellationToken token = default)
         {
-            using (var form = _formFactory.Invoke())
+            using (var form = new Form
+            {
+                Name = "WebAuthentication",
+                Text = "登录",
+                Width = 1027,
+                Height = 768,
+                StartPosition = FormStartPosition.CenterScreen
+            })
             using (var browser = new ExtendedWebBrowser()
             {
                 Dock = DockStyle.Fill
