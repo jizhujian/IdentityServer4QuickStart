@@ -39,8 +39,8 @@ namespace WinFormsClient
             LoginResult = await _oidcClient.LoginAsync();
             if (!LoginResult.IsError)
             {
-                AccessToken = LoginHelper.LoginResult.AccessToken;
-                RefreshToken = LoginHelper.LoginResult.RefreshToken;
+                AccessToken = LoginResult.AccessToken;
+                RefreshToken = LoginResult.RefreshToken;
             }
 
             return !LoginResult.IsError;
