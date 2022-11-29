@@ -39,10 +39,6 @@ builder.Services.AddUserAccessTokenHttpClient("client", configureClient: client 
 {
     client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ApiBaseUrl"));
 });
-//builder.Services.AddClientAccessTokenHttpClient("client", configureClient: client =>
-//{
-//    client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ApiBaseUrl"));
-//});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
