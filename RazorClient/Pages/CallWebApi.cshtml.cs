@@ -17,7 +17,7 @@ namespace RazorClient.Pages
         public async Task OnGetAsync()
         {
             var client = _httpClientFactory.CreateClient("client");
-            var content = await client.GetStringAsync("http://localhost:39999/api/identity/getuserclaims");
+            var content = await client.GetStringAsync("identity/getuserclaims");
             UserClaims = JsonSerializer.Deserialize<List<ClaimItem>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
     }

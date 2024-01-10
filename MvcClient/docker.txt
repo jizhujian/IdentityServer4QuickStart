@@ -1,0 +1,22 @@
+docker rmi identityserver4.quickstart.mvcclient
+
+docker build -f .\Dockerfile -t identityserver4.quickstart.mvcclient .
+
+docker stop identityserver4.quickstart.mvcclient
+docker rm identityserver4.quickstart.mvcclient
+
+docker run -d `
+  --name identityserver4.quickstart.mvcclient `
+  --restart=always `
+  -p 39998:8081 `
+  -e 'ASPNETCORE_URLS=https://+:8081;http://+:8080' `
+  -v D:\源代码\kubernetes\cert:/cert `
+  -v D:\源代码\kubernetes\cert\my-ca.crt:/usr/local/share/ca-certificates/my-ca.crt `
+  -e 'ASPNETCORE_Kestrel__Certificates__Default__Path=/cert/my-server.crt' `
+  -e 'ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/cert/my-server.key' `
+  -e 'Authentication__Authority=https://10.10.79.49:30001' `
+  -e 'Authentication__RequireHttpsMetadata=true' `
+  -e 'ApiBaseUrl=https://10.10.79.49:39999/api/' `
+  identityserver4.quickstart.mvcclient
+
+docker exec -it -u root identityserver4.quickstart.mvcclient update-ca-certificates

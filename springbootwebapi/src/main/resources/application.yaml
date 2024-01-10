@@ -1,0 +1,29 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://10.18.3.19:34310
+  ssl:
+    bundle:
+      jks:
+        webserver:
+          key:
+            alias: "my server"
+          keystore:
+            location: "classpath:my-server.pfx"
+            password: "Password1*"
+server:
+  port: 39995
+#  ssl:
+#    bundle: "webserver"
+#    client-auth: NONE
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    oauth:
+      clientId: "身份验证和授权服务快速入门_springboot_api_swaggerui"
+      clientSecret: ""
+      app-name: "身份验证和授权服务快速入门_api"

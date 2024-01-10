@@ -1,0 +1,12 @@
+docker rmi identityserver4.quickstart.springbootwebapi
+
+docker build -f .\Dockerfile -t identityserver4.quickstart.springbootwebapi .
+
+docker stop identityserver4.quickstart.springbootwebapi
+docker rm identityserver4.quickstart.springbootwebapi
+
+docker run -d `
+  --name identityserver4.quickstart.springbootwebapi `
+  --restart=always `
+  -p 39995:39995 `
+  identityserver4.quickstart.springbootwebapi

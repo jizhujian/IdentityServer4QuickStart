@@ -1,0 +1,13 @@
+docker rmi identityserver4.quickstart.javascriptclient
+
+docker build -f .\Dockerfile -t identityserver4.quickstart.javascriptclient .
+
+docker stop identityserver4.quickstart.javascriptclient
+docker rm identityserver4.quickstart.javascriptclient
+
+docker run -d `
+  --name identityserver4.quickstart.javascriptclient `
+  --restart=always `
+  -p 39997:443 `
+  -v D:\Ô´´úÂë\kubernetes\cert:/cert `
+  identityserver4.quickstart.javascriptclient

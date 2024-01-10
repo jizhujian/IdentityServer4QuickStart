@@ -17,12 +17,12 @@ document.getElementById("api").addEventListener("click", api, false);
 document.getElementById("logout").addEventListener("click", logout, false);
 
 var config = {
-    authority: "https://61.177.200.186:44310",
+    authority: "https://10.10.79.49:30001",
     client_id: "身份验证和授权服务快速入门_api_js客户端",
-    redirect_uri: "https://localhost:39997/callback.html",
+    redirect_uri: "https://10.10.79.49:39997/callback.html",
     response_type: "code",
     scope: "openid profile roles 身份验证和授权服务快速入门_api offline_access",
-    post_logout_redirect_uri: "https://localhost:39997"
+    post_logout_redirect_uri: "https://10.10.79.49:39997"
 };
 var mgr = new Oidc.UserManager(config);
 
@@ -41,7 +41,7 @@ function login() {
 
 function api() {
     mgr.getUser().then(function (user) {
-        var url = "http://localhost:39999/api/identity/getuserclaims";
+        var url = "https://10.10.79.49:39999/api/identity/getuserclaims";
 
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url);
